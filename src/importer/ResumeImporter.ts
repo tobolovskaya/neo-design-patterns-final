@@ -3,9 +3,11 @@
  * Наслідується від AbstractImporter і реалізує абстрактні методи
  */
 
-import { AbstractImporter } from "./AbstractImporter";
-import { ResumeModel } from "../models/ResumeModel";
-import { BlockFactory } from "../blocks/BlockFactory";
+import { AbstractImporter } from './AbstractImporter';
+import { ResumeModel } from '../models/ResumeModel';
+import { BlockFactory, BlockType } from '../blocks/BlockFactory';
+
+const ALLOWED_FIELDS: BlockType[] = ['header', 'summary', 'experience', 'education', 'skills'];
 
 export class ResumeImporter extends AbstractImporter<ResumeModel> {
   /**
@@ -15,11 +17,9 @@ export class ResumeImporter extends AbstractImporter<ResumeModel> {
    * Перевірте наявність необхідних полів (header, summary, experience, education, skills)
    */
   protected validate(): void {
-    const requiredFields = ["header", "summary", "experience", "education", "skills"];
-    for (const field of requiredFields) {
-      if (!(field in (this.raw as Record<string, unknown>))) {
-        throw new Error(`Missing required field: ${field}`);
-      }
+    const resume = this.raw as ResumeModel;
+    if (!ALLOWED_FIELDS.every(field => Object.keys(resume).includes(field))) {
+      throw new Error('Invalid JSON format: missing required fields');
     }
   }
 
@@ -37,17 +37,15 @@ export class ResumeImporter extends AbstractImporter<ResumeModel> {
    * TODO: Реалізуйте рендеринг моделі у DOM-дерево
    */
   protected render(model: ResumeModel): void {
-    const root = document.getElementById("resume-content")!;
-    // TODO: Створіть фабрику і використайте її для створення і рендерингу блоків
+    const root = document.getElementById('resume-content')!;
     const factory = new BlockFactory();
 
-    // TODO: Створіть і додайте у DOM кожен блок резюме
     root.append(
       factory.createBlock('header', model).render(),
       factory.createBlock('summary', model).render(),
       factory.createBlock('experience', model).render(),
       factory.createBlock('education', model).render(),
       factory.createBlock('skills', model).render()
-    )
+    );
   }
 }
