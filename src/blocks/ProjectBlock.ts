@@ -19,8 +19,7 @@ export class ProjectBlock implements IBlock {
     // Створюємо контейнер для проєкту
     const container = document.createElement("div");
     container.className = "project-item";
-
-    // TODO: Заповнити container.textContent рядком: "• {name} – {description}"
+    container.textContent = `• ${this.d.name} – ${this.d.description}`;
 
     return container;
   }
