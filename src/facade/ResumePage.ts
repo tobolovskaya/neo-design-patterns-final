@@ -6,12 +6,8 @@ import { ResumeImporter } from "../importer/ResumeImporter";
 export class ResumePage {
   async init(jsonPath: string): Promise<void> {
     const data = await this.fetchData(jsonPath);
-    // Отримуємо масив HTMLElement з імпортера:
-    const elements = new ResumeImporter(data).import();
-    // Додаємо їх у контейнер:
-    const root = document.getElementById("resume-content");
-    if (!root) throw new Error("❌ У index.html немає <div id='resume-content'>");
-    elements.forEach((el) => root.appendChild(el));
+    // Ініціалізуємо імпортера, який самостійно валідує, мапить та рендерить дані
+    new ResumeImporter(data).import();
   }
 
   private async fetchData(path: string): Promise<any> {
