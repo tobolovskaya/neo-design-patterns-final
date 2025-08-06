@@ -5,12 +5,7 @@
  * залежно від типу, переданого як параметр.
  */
 
-import {
-  ResumeModel,
-  Education,
-  Experience,
-  Skills,
-} from "../models/ResumeModel";
+import {ResumeModel} from "../models/ResumeModel";
 import { HeaderBlock } from "./HeaderBlock";
 import { SummaryBlock } from "./SummaryBlock";
 import { ExperienceBlock } from "./ExperienceBlock";
@@ -44,24 +39,21 @@ export class BlockFactory {
     switch (type) {
       case "header":
         // TODO: Поверніть новий HeaderBlock з відповідними даними
-        return new HeaderBlock(model.header);
+        return new HeaderBlock(m.header);
       case "summary":
         // TODO: Поверніть новий SummaryBlock з відповідними даними
-        return new SummaryBlock(model.summary);
+        return new SummaryBlock(m.summary);
       case "experience":
         // TODO: Поверніть новий ExperienceBlock з відповідними даними
-        return new ExperienceBlock(model.experience);
+        return new ExperienceBlock(m.experience);
       case "education":
         // TODO: Поверніть новий EducationBlock з відповідними даними
-        return new EducationBlock(model.education);
+        return new EducationBlock(m.education);
       case "skills":
         // TODO: Поверніть новий SkillsBlock з відповідними даними
-        return new SkillsBlock(model.skills);
+        return new SkillsBlock(m.skills);
       default:
         throw new Error(`Unknown block type: ${type}`);
     }
-
-    // Тимчасове рішення для компілятора видалити після реалізації
-    throw new Error("Method not implemented");
   }
 }
