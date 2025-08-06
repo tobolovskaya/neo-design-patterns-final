@@ -15,7 +15,12 @@ export class ResumeImporter extends AbstractImporter<ResumeModel> {
    * Перевірте наявність необхідних полів (header, summary, experience, education, skills)
    */
   protected validate(): void {
-    // TODO: Додайте перевірки на наявність обов'язкових полів та їх структуру. Неприпустимий формат JSON
+    const requiredFields = ["header", "summary", "experience", "education", "skills"];
+    for (const field of requiredFields) {
+      if (!(field in (this.raw as Record<string, unknown>))) {
+        throw new Error(`Missing required field: ${field}`);
+      }
+    }
   }
 
   /**
@@ -37,5 +42,12 @@ export class ResumeImporter extends AbstractImporter<ResumeModel> {
     const factory = new BlockFactory();
 
     // TODO: Створіть і додайте у DOM кожен блок резюме
+    root.append(
+      factory.createBlock('header', model).render(),
+      factory.createBlock('summary', model).render(),
+      factory.createBlock('experience', model).render(),
+      factory.createBlock('education', model).render(),
+      factory.createBlock('skills', model).render()
+    )
   }
 }
