@@ -19,6 +19,13 @@ export class SummaryBlock implements IBlock {
     el.className = "section summary";
 
     // TODO: Додайте до секції заголовок h2 і параграф з текстом опису (this.d.text)
+    const title = document.createElement("h2");
+    title.textContent = "Короткий опис";
+    el.appendChild(title);
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = this.d.text;
+    el.appendChild(paragraph);
 
     return el;
   }
